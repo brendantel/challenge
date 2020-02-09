@@ -1,0 +1,15 @@
+{
+  "name": "frontend-challenge",
+  "version": "1.0.0",
+  "description": "Cluster Frontend Challenge",
+  "main": "index.js",
+  "scripts": {
+    "install:api": "cd ./fc-api  && yarn install",
+    "install:web": "cd ./frontend-challenge && yarn install",
+    "inst": "npm run install:api && npm run install:web",
+    "start:api": "cd ./fc-api && npm run start",
+    "start:web": "cd ./frontend-challenge && npm run start:dev"
+  },
+  "author": "",
+  "license": "ISC"
+}

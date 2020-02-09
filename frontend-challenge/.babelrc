@@ -1,0 +1,20 @@
+{
+  "presets": [
+    "next/babel",
+    "@zeit/next-typescript/babel"
+  ],
+  "plugins": ["inline-react-svg",
+    [
+      
+      "styled-components",
+      {
+        "ssr": true
+      }
+    ]
+  ],
+  "env": {
+    "test": {
+      "plugins": ["babel-plugin-require-context-hook"]
+    }
+  }
+}

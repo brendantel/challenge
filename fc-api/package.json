@@ -1,0 +1,33 @@
+{
+  "name": "frontendchallengapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "programs": "babel-node ./databaseHelpers/programsToDB.js",
+    "schools": "babel-node ./databaseHelpers/schoolsToDB.js",
+    "pp": "babel-node ./databaseHelpers/populateDatabase.js",
+    "start": "nodemon --exec babel-node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^6.2.0",
+    "graphql-yoga": "^1.16.9",
+    "mongodb": "^3.1.10",
+    "mongoose": "^5.4.4",
+    "nodemon": "^2.0.2",
+    "@babel/core": "^7.2.2",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "@babel/preset-react": "^7.0.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "@babel/preset-react": "^7.0.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0"
+  }
+}
