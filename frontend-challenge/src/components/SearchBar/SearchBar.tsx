@@ -29,7 +29,6 @@ const SearchBar = () => {
     const [input, setInput] = useState('')
 
     const handleInputChange = event => {
-        console.log(input)
         setInput(event.currentTarget.value)
     }
     

@@ -47,11 +47,13 @@ const renderProgramContainer = (programs, count, term = null) => {
     ));
 
   // write the renderHeader function
+  const renderHeader = (count, term) => (
+    <ResultsHeader>{count} {term ? `Items For ${term}` : 'Items Found'}!</ResultsHeader>
+  )
 
   return (
     <ProgramContainer>
-      {/* render the header inside of the ResultsHeader component */}
-      {/* Render the list of programs here using a function called renderPrograms */}
+      {renderHeader(count, term)}
       {renderPrograms(programs)}
     </ProgramContainer>
   );

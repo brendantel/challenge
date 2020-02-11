@@ -17,7 +17,6 @@ const programSearch = async (parent, { data }, ctx, info) => {
         skip: data.offset || 0,
         limit: data.limit || 0
     }
-    console.log(pagination)
     const { models: { Program } } = ctx
     const queryObj = {}
     if (data.term) {
