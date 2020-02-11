@@ -26,10 +26,16 @@ import {Container, Input, SubmitButton} from './SearchBar.styles'
 
 
 const SearchBar = () => {
+    const [input, setInput] = useState('')
+
+    const handleInputChange = event => {
+        console.log(input)
+        setInput(event.currentTarget.value)
+    }
     
     return(
         <Container>
-            <Input/>
+            <Input name="term" type="text" onChange={handleInputChange} />
             <SubmitButton ></SubmitButton>
         </Container>
     )

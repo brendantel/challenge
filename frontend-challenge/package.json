@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "start": "next start ./src",
-    "start:dev": "next ./src",
+    "start:dev": "next -p 3001 ./src",
     "build": "next build ./src",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"

@@ -13,25 +13,29 @@ const program = async (parent, { data }, ctx, info) => {
 
 //TODO: Create the program search resolver
 const programSearch = async (parent, { data }, ctx, info) => {
-    const options = {
+    const pagination = {
         skip: data.offset || 0,
         limit: data.limit || 0
     }
+    console.log(pagination)
     const { models: { Program } } = ctx
-    const query = Program.find({}, null, options)
+    const queryObj = {}
     if (data.term) {
-        const searchFields = ['name', 'degreeType', 'schoolName', 'deliveryMode'].map(field => {
-            return { [field]: { $regex: data.term, $options: 'i' } }
+        queryObj.$or = []
+        const searchFields = ['name', 'degreeType', 'schoolName', 'deliveryMode'].forEach(field => {
+            queryObj.$or.push({ [field]: { $regex: data.term, $options: 'i' } })
         })
-        query.or(searchFields)
     }
+    const query = Program.find(queryObj, null, pagination)
+    const countQuery = Program.countDocuments(queryObj, null, {skip: 0, limit: 0})
 
-    return await query.then(programs => {
+    return await Promise.all([query, countQuery]).then(([programs, count]) => {
         return {
-            count: programs.length,
+            count,
             programs
         }
     })
+
     /*
         should have optional params, term, filter, limit, and offset
         if offset and limit are not provided set the defaults to offset = 0, limit = 0

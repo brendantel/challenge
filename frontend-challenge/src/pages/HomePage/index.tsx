@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import BottomBar from '../../components/BottomBar/BottomBar';
 import FilterMenu from '../../components/FilterMenu/FilterMenu';
@@ -7,6 +7,9 @@ import ProgramRow from '../../components/ProgramRow/ProgramRow';
 import { Spinner } from '../../components/Spinner/Spinner';
 import { PROGRAM_SEARCH } from '../../graphQL/queries';
 import { ProgramContainer, ResultsHeader } from './HomePage.styles';
+import { useQuery } from '@apollo/react-hooks'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../redux/rootReducer'
 
 //TODO: Build the home page
 /*
@@ -55,26 +58,31 @@ const renderProgramContainer = (programs, count, term = null) => {
 };
 
 const HomePage = () => {
-
   const itemsPerPage = 10;
+  const [page, setPage] = useState(1)
 
   // Pull the term and filter from the redux store
-
+  const { term, filter } = useSelector((state: RootState) => state)
 
   // Use the PROGRAM_SEARCH QUERY to get the count and programs list
   // supply that query with the offest, limit, term, and filter options
+  const { loading, data } = useQuery(PROGRAM_SEARCH, { variables: { data: { term, offset: page * itemsPerPage, limit: itemsPerPage } } })
+  let programs
 
+  if (loading) {
+    programs = <Spinner />
+  } else {
+    programs = renderProgramContainer(data.programSearch.programs, data.programSearch.count, term)
+  }
 
   return (
     <Layout>
-
-{/* Filter Menu goes here */}
-{/* Spinner or programs container */}
-{/* Bottom Bar */}
+      {/* Filter Menu goes here */}
+      {programs}
       <BottomBar
-        count={}    //put the count data here
-        page={}     //put the current page here
-        setPage={}  //put a function to set the page here
+        count={data ? data.programSearch.count : 0}    //put the count data here
+        page={page}     //put the current page here
+        setPage={setPage}  //put a function to set the page here
         itemsPerPage={itemsPerPage}
       />
     </Layout>

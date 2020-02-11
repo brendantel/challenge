@@ -1,6 +1,4 @@
 import styled from 'styled-components'
-
-//TODO: Style the searchbar components using flex-box
 /*
     create a styled input component
 
@@ -13,6 +11,19 @@ import styled from 'styled-components'
         * there should be no border or outline
         * The placeholder should be colored #ddd
 */
+
+export const Input = styled.input`
+    display: flex;
+    flex-grow: 1;
+    padding: 1rem .2rem;
+    color: #888;
+    font-style: bold;
+    border: none;
+    outline: none;
+    ::placeholder {
+        color: #ddd;
+    }
+`
 
 
 export const Container = styled.div`

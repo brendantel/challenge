@@ -1,6 +1,5 @@
 import gql from 'graphql-tag';
 
-// TODO: Write GraphQL Queries
 //GraphQL playground is running on localhost:4000/gql use it to setup these queries
 /*
     PROGRAM_SEARCH:
@@ -24,6 +23,46 @@ import gql from 'graphql-tag';
         name, schoolLogo, backgroundColor, gradientColor, 
         schoolDescription, and schoolType
 */
-
+export const PROGRAM_SEARCH = gql`
+    query ProgramSearch($data: ProgramSearchTermInput!) {
+        programSearch(data: $data) {
+            count
+            programs {
+                id
+                name
+                degreeType
+                deliveryMode
+                requiredCredits
+                costPerCredit
+                school {
+                    name
+                    schoolLogo
+                    totalEnrollment
+                    schoolType
+                }
+            }
+        }
+    }
+`
+export const GET_PROGRAM = gql`
+    query GetProgram($id: String!) {
+        program(id: $id) {
+            id
+            name
+            costPerCredit
+            programUrl
+            programDescription
+            degreeType
+            school {
+                name
+                schoolLogo
+                backgroundColor
+                gradientColor
+                schoolDescription
+                schoolType
+            }
+        }
+    }
+`
 
 
