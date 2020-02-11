@@ -12,7 +12,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../../redux/rootReducer'
 import { updateFilter } from '../../redux/Filter/filter.actions';
 
-//TODO: Build the home page
+//Build the home page
 /*
   add appropriate types
 

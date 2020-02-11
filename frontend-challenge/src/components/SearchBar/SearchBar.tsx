@@ -1,12 +1,13 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
 //import necissary items for updating redux store
-import {useDispatch} from 'react-redux'
+import { useDispatch } from 'react-redux'
 //Import necissary items to use fontAwesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faSearch} from '@fortawesome/free-solid-svg-icons'
-import {Container, Input, SubmitButton} from './SearchBar.styles'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { Container, Input, SubmitButton } from './SearchBar.styles'
 import { updateTerm } from '../../redux/Term/term.actions'
+import { useRouter } from 'next/router'
 
 /*
     For this component use hooks to manage state, and update the redux store.
@@ -30,22 +31,30 @@ import { updateTerm } from '../../redux/Term/term.actions'
 
 const SearchBar = () => {
     const [input, setInput] = useState('')
+    const router = useRouter()
     const dispatch = useDispatch()
 
     const handleInputChange = event => {
         setInput(event.currentTarget.value)
     }
 
-    const handleKeyPress = event => {
-        if(event.key === 'Enter') {
-            dispatch(updateTerm(input))
+    const handleDispatch = () => {
+        dispatch(updateTerm(input))
+        if (router.pathname !== '/') {
+            router.push('/')
         }
     }
-    
-    return(
+
+    const updateSearchTerm = event => {
+        if (event.key === 'Enter' || event.type === 'click') {
+            handleDispatch()
+        }
+    }
+
+    return (
         <Container>
-            <Input name="term" type="text" onChange={handleInputChange} placeholder="Search for Online Course" onKeyPress={handleKeyPress} value={input}/>
-            <SubmitButton onClick={() => dispatch(updateTerm(input))}>
+            <Input name="term" type="text" onChange={handleInputChange} placeholder="Search for Online Course" onKeyPress={updateSearchTerm} value={input} />
+            <SubmitButton onClick={updateSearchTerm}>
                 <FontAwesomeIcon icon={faSearch} color="#fff"></FontAwesomeIcon>
             </SubmitButton>
         </Container>
