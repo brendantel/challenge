@@ -1,4 +1,4 @@
-type Query{
+type Query {
     program(data: ProgramInput): Program
     programSearch(data: ProgramSearchTermInput): ProgramSearchReturnType
 }
@@ -19,5 +19,44 @@ input ProgramInput {
     id: String!
 }
 
-# TODO: Based on the models in the database create a type def for School, and Program
+type Program {
+    id: String
+    name: String
+    school: School
+    collegeOrDeptName: String
+    degreeType: String
+    degreeLevel: String
+    schoolName: String
+    deliveryMode: String
+    requiredCredits: Float
+    timeToComplete: String
+    schoolLogo: String
+    costPerCredit: Float
+    costPerDegree: Float
+    programUrl: String
+    programDescription: String
+    programAudience: String
+    tags: [String]
+    applicationDeadline: String
+}
+
+type School {
+    id: String
+    name: String
+    programs: [Program]
+    universityName: String
+    departments: [String]
+    campusLocations: String
+    schoolType: String
+    accreditation: String
+    schoolLogo: String
+    schoolDescription: String
+    totalEnrollment: Float 
+    backgroundColor: String
+    gradientColor: [String]
+    engineeringDevisionDescription: String
+    costPerUnit: [Float]
+}
+
+
 
