@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
 import BottomBar from '../../components/BottomBar/BottomBar';
 import FilterMenu from '../../components/FilterMenu/FilterMenu';
@@ -8,8 +8,9 @@ import { Spinner } from '../../components/Spinner/Spinner';
 import { PROGRAM_SEARCH } from '../../graphQL/queries';
 import { ProgramContainer, ResultsHeader } from './HomePage.styles';
 import { useQuery } from '@apollo/react-hooks'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../../redux/rootReducer'
+import { updateFilter } from '../../redux/Filter/filter.actions';
 
 //TODO: Build the home page
 /*
@@ -29,10 +30,6 @@ import { RootState } from '../../redux/rootReducer'
        The graphQL query PROGRAM_SEARCH accepts the following variables:
        offset, limit, term, and filter.  It returns two items, count & programs.
        run the query and render out the HomePage.
-
-    *  Pull the term and filter from the redux store
-
-    *  Create a piece of state called page
 
     *  Inside of the layout component render the FilterMenu, ProgramContainer, and BottomBar
 
@@ -62,13 +59,15 @@ const renderProgramContainer = (programs, count, term = null) => {
 const HomePage = () => {
   const itemsPerPage = 10;
   const [page, setPage] = useState(1)
+  const dispatch = useDispatch()
+  const filterSelected = useCallback((filter) => event => dispatch(updateFilter(filter)), [dispatch])
 
   // Pull the term and filter from the redux store
   const { term, filter } = useSelector((state: RootState) => state)
 
   // Use the PROGRAM_SEARCH QUERY to get the count and programs list
   // supply that query with the offest, limit, term, and filter options
-  const { loading, data } = useQuery(PROGRAM_SEARCH, { variables: { data: { term, offset: page * itemsPerPage, limit: itemsPerPage } } })
+  const { loading, data } = useQuery(PROGRAM_SEARCH, { variables: { data: { term, offset: page * itemsPerPage, limit: itemsPerPage, filter } } })
   let programs
 
   if (loading) {
@@ -79,7 +78,7 @@ const HomePage = () => {
 
   return (
     <Layout>
-      {/* Filter Menu goes here */}
+      <FilterMenu filter={filter} filterSelected={filterSelected} />
       {programs}
       <BottomBar
         count={data ? data.programSearch.count : 0}    //put the count data here

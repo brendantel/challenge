@@ -11,7 +11,7 @@ const program = async (parent, { data }, ctx, info) => {
     return await Program.findById(data.id).populate('school')
 }
 
-//TODO: Create the program search resolver
+//Create the program search resolver
 const programSearch = async (parent, { data }, ctx, info) => {
     const pagination = {
         skip: data.offset || 0,
@@ -19,6 +19,9 @@ const programSearch = async (parent, { data }, ctx, info) => {
     }
     const { models: { Program } } = ctx
     const queryObj = {}
+    if (data.filter) {
+        queryObj.degreeLevel = { $regex: data.filter }
+    }
     if (data.term) {
         queryObj.$or = []
         const searchFields = ['name', 'degreeType', 'schoolName', 'deliveryMode'].forEach(field => {
@@ -26,7 +29,7 @@ const programSearch = async (parent, { data }, ctx, info) => {
         })
     }
     const query = Program.find(queryObj, null, pagination)
-    const countQuery = Program.countDocuments(queryObj, null, {skip: 0, limit: 0})
+    const countQuery = Program.countDocuments(queryObj, null, { skip: 0, limit: 0 })
 
     return await Promise.all([query, countQuery]).then(([programs, count]) => {
         return {
