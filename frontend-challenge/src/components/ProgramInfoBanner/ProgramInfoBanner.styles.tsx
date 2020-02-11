@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-//TODO: Style the Program Info Banner
+//Style the Program Info Banner
 /*
     BannerWrapper:
         * use css grid
@@ -21,13 +21,24 @@ import styled from 'styled-components'
 */
 
 export const BannerWrapper = styled.div`
-
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 1fr 1fr;
+    grid-column-gap: 1rem;
+    padding: 0 5rem 1rem 5rem;
+    border-bottom: 2px solid #888;
 `
 
 export const FieldTitle = styled.p`
-
+    font-style: bold;
+    margin-top: 1rem;
 `
 
-export const FieldValue = styled.p`
+interface FieldValueProps {
+    dmode: boolean;
+}
 
+export const FieldValue = styled.p<FieldValueProps>`
+    font-size: 1.5rem;
+    color: ${props => props.dmode ? '#38e' : '#888'}
 `

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-//TODO: Style the Program Info Component
+//Style the Program Info Component
 /*
     Wrapper:
         * use css grid
@@ -35,11 +35,17 @@ import styled from 'styled-components'
 
 
 export const Wrapper = styled.div`
-
+    display: grid;
+    grid-template-columns: 1fr 0.5fr;
+    grid-column-gap: 1rem;
+    padding: 2rem 10rem;
 `
 
 export const Card = styled.div`
-
+    border-radius: 0.5rem;
+    box-shadow: 1px 1px 2px 2px #ddd;
+    color: #333;
+    padding: 2rem 0.5rem;
 `
 
 export const FieldWrapper = styled.div`
@@ -48,15 +54,19 @@ export const FieldWrapper = styled.div`
 
 
 export const DescHeader = styled.h3`
-
+    font-weight: bold;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
 `
 
 export const Description = styled.p`
-
+    margin-bottom: 1rem;
 `
 
 export const TuitionRow = styled.div`
-
+    display: flex;
+    justify-content: space-between;
+    padding: 0.25rem 2rem;
 `
 
 export const TuitionLabel = styled.p`

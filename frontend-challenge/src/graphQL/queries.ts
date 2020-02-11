@@ -45,14 +45,15 @@ export const PROGRAM_SEARCH = gql`
     }
 `
 export const GET_PROGRAM = gql`
-    query GetProgram($id: String!) {
-        program(id: $id) {
+    query Program($data: ProgramInput!)  {
+        program(data: $data) {
             id
             name
             costPerCredit
             programUrl
             programDescription
             degreeType
+            deliveryMode
             school {
                 name
                 schoolLogo

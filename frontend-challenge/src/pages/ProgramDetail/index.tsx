@@ -6,8 +6,10 @@ import ProgramInfoBanner from '../../components/ProgramInfoBanner/ProgramInfoBan
 import SchoolBanner from '../../components/SchoolBanner/SchoolBanner';
 import { Spinner } from '../../components/Spinner/Spinner';
 import { GET_PROGRAM } from '../../graphQL/queries';
+import { useQuery } from '@apollo/react-hooks';
+import { useRouter } from 'next/router';
 
-//TODO: Build the School Page page
+// Build the School Page page
 /* 
   the page should be routed to with a parameter id which
   corrisponds to the id of the program which will be displayed
@@ -38,8 +40,7 @@ const renderBody = ({
 
   return (
     <>
-
-      {/* add the school banner here */}
+      <SchoolBanner school={school} name={name} />
       <ProgramInfoBanner
         costPerCredit={costPerCredit}
         requiredCredits={requiredCredits}
@@ -62,11 +63,12 @@ const renderBody = ({
 const SchoolPage = () => {
   // trigger the GET_PROGRAM query as soon as the page appears
   // pass it the id from the query param in the pages address
-
+  const router = useRouter()
+  const { loading, data } = useQuery(GET_PROGRAM, { variables: { data: { id: router.query.id } } })
 
   return (
     <Layout>
-      {/* render the Spinner or the renderBody function */}
+      {loading ? <Spinner /> : renderBody(data.program)}
     </Layout>
   );
 };

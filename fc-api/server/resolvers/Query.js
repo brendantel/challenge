@@ -28,7 +28,7 @@ const programSearch = async (parent, { data }, ctx, info) => {
             queryObj.$or.push({ [field]: { $regex: data.term, $options: 'i' } })
         })
     }
-    const query = Program.find(queryObj, null, pagination)
+    const query = Program.find(queryObj, null, pagination).populate('school')
     const countQuery = Program.countDocuments(queryObj, null, { skip: 0, limit: 0 })
 
     return await Promise.all([query, countQuery]).then(([programs, count]) => {
