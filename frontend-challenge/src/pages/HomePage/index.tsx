@@ -59,6 +59,7 @@ const renderProgramContainer = (programs, count, term = null) => {
 const HomePage = () => {
   const itemsPerPage = 10;
   const [page, setPage] = useState(1)
+  const offset = (page - 1) * itemsPerPage
   const dispatch = useDispatch()
   const filterSelected = useCallback((filter) => event => dispatch(updateFilter(filter)), [dispatch])
 
@@ -67,7 +68,7 @@ const HomePage = () => {
 
   // Use the PROGRAM_SEARCH QUERY to get the count and programs list
   // supply that query with the offest, limit, term, and filter options
-  const { loading, data } = useQuery(PROGRAM_SEARCH, { variables: { data: { term, offset: page * itemsPerPage, limit: itemsPerPage, filter } } })
+  const { loading, data } = useQuery(PROGRAM_SEARCH, { variables: { data: { term, offset, limit: itemsPerPage, filter } } })
   let programs
 
   if (loading) {

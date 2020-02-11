@@ -1,10 +1,13 @@
 import React, {useState} from 'react'
 
 //import necissary items for updating redux store
+import {useDispatch} from 'react-redux'
 //Import necissary items to use fontAwesome
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faSearch} from '@fortawesome/free-solid-svg-icons'
 import {Container, Input, SubmitButton} from './SearchBar.styles'
+import { updateTerm } from '../../redux/Term/term.actions'
 
-// TODO: Build and style the search bar
 /*
     For this component use hooks to manage state, and update the redux store.
 
@@ -27,15 +30,24 @@ import {Container, Input, SubmitButton} from './SearchBar.styles'
 
 const SearchBar = () => {
     const [input, setInput] = useState('')
+    const dispatch = useDispatch()
 
     const handleInputChange = event => {
         setInput(event.currentTarget.value)
     }
+
+    const handleKeyPress = event => {
+        if(event.key === 'Enter') {
+            dispatch(updateTerm(input))
+        }
+    }
     
     return(
         <Container>
-            <Input name="term" type="text" onChange={handleInputChange} />
-            <SubmitButton ></SubmitButton>
+            <Input name="term" type="text" onChange={handleInputChange} placeholder="Search for Online Course" onKeyPress={handleKeyPress} value={input}/>
+            <SubmitButton onClick={() => dispatch(updateTerm(input))}>
+                <FontAwesomeIcon icon={faSearch} color="#fff"></FontAwesomeIcon>
+            </SubmitButton>
         </Container>
     )
 }

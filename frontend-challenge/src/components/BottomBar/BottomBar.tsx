@@ -12,7 +12,7 @@ const BottomBar = ({count, page, setPage, itemsPerPage}) => {
     }
 
     const renderButtons = () => {
-        const numberOfPages = Math.floor(count / itemsPerPage)
+        const numberOfPages = Math.ceil(count / itemsPerPage)
         let buttons = []
 
         const moveBack = () => { updatePage(page - 1) }
